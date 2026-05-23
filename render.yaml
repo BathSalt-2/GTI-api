@@ -1,0 +1,22 @@
+# Render Blueprint — GTI-api
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: gti-api
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false # Set manually — Neon Postgres connection string
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: CORS_ORIGIN
+        sync: false # Set to your frontend URL
